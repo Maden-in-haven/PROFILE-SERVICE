@@ -1,0 +1,113 @@
+openapi: 3.0.1
+info:
+  title: 'CRM: Профили'
+  description: API для CRM
+  version: 1.0.0
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:3000/api
+    description: Локальный сервер разработки
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        role:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        is_deleted:
+          type: boolean
+    Admin:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            permissions:
+              type: object
+              additionalProperties: true
+    Manager:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            full_name:
+              type: string
+            hire_date:
+              type: string
+              format: date-time
+    Client:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            full_name:
+              type: string
+            phone_number:
+              type: string
+
+  responses:
+    UnauthorizedError:
+      description: "Не авторизован"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Не авторизован"
+    ForbiddenError:
+      description: "Нет доступа"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Нет доступа"
+
+tags:
+  - name: Authorization
+    description: Операции связанные с авторизацией
+security:
+  - BearerAuth: []
+  
+paths:
+  /profile:
+    get:
+      summary: Получение профиля пользователя
+      description: Возвращает профиль пользователя на основе его JWT токена.
+      tags:
+        - Profile
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Профиль пользователя
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/User'
+                  - $ref: '#/components/schemas/Client'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'

@@ -1,0 +1,6 @@
+curl -X GET http://localhost:3000/profile \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg2MDIyOTUsImV4cF9yZWFkYWJsZSI6IjIwMjQtMTAtMTBUMjM6MTg6MTVaIiwiaWF0IjoxNzI4NTU5MDk1LCJpYXRfcmVhZGFibGUiOiIyMDI0LTEwLTEwVDExOjE4OjE1WiIsInN1YiI6IjUzNDVlMjhlLTgzNTItNGEzMS1iZmYwLTNkMmY4MTIzMGEwYiIsInR5cCI6ImFjY2VzcyJ9.KQwn1HUw_2618PrQNFqctquu-wv1FIeQfkoyALLzxSE" \
+  -H "Accept: application/json"
+
+  sudo docker build -t my-go-app .
+  sudo docker run -p 3000:3000 my-go-app
