@@ -21,7 +21,7 @@ func JWTAuthentication(next http.Handler) http.Handler {
 		// Парсим токен и проверяем его валидность
 		claims, err := myjwt.ValidateJWT(tokenString)
 		if err != nil {
-			http.Error(w, "Неверный токен", http.StatusForbidden)
+			http.Error(w, "Неверный токен", http.StatusUnauthorized)
 			return
 		}
 
