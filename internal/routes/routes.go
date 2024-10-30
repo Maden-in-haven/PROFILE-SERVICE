@@ -16,7 +16,7 @@ func ProfileRun() {
 	r.Handle("/api/profile", middlewares.JWTAuthentication(http.HandlerFunc(handler.GetProfile))).Methods("GET")
 
 	// Запускаем сервер на порту 8080
-	port := ":3000"
+	port := ":8080"
 	log.Printf("Сервер запущен на порту %s", port)
 
 	// Логируем ошибки, если таковые возникнут при запуске
